@@ -19,6 +19,16 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
+    alert('Your todo has been saved!')
+  }
+
+  const handleDelete = async (index) => {
+    await fetch(`http://localhost:3001/data/${todoList.id}/${index}`, {
+      method: 'DELETE',
+    })
+
+    setTodos((todos) => [...todos.slice(0, index), ...todos.slice(index + 1)])
+    alert('Your todo has been deleted!')
   }
 
   return (
@@ -51,13 +61,7 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                 sx={{ margin: '8px' }}
                 size='small'
                 color='secondary'
-                onClick={() => {
-                  setTodos([
-                    // immutable delete
-                    ...todos.slice(0, index),
-                    ...todos.slice(index + 1),
-                  ])
-                }}
+                onClick={() => handleDelete(index)}
               >
                 <DeleteIcon />
               </Button>

@@ -61,3 +61,20 @@ app.post('/data', (req, res) => {
     res.status(404).json({ message: 'List not found!' })
   }
 })
+
+app.delete('/data/:listId/:todoIndex', (req, res) => {
+  console.log('DELETE request received!')
+  const storedData = readData()
+  console.log('storedData', storedData)
+  const listId = req.params.listId
+  const todoIndex = parseInt(req.params.todoIndex)
+  console.log('Request Data - listId:', listId, 'todoIndex:', todoIndex)
+
+  if (storedData[listId]) {
+    storedData[listId].todos = storedData[listId].todos.filter((_, index) => index !== todoIndex) //kolla upp _ istället för todo eftersom det inte används. Kanske tydligare att behålla todo? Extra med spread istället för filter?
+    saveData(storedData)
+    res.status(200).json({ message: 'Deleted todo successfully!' })
+  } else {
+    res.status(404).json({ message: 'List not found!' })
+  }
+})
