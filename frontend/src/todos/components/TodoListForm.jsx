@@ -6,9 +6,19 @@ import AddIcon from '@mui/icons-material/Add'
 export const TodoListForm = ({ todoList, saveTodoList }) => {
   const [todos, setTodos] = useState(todoList.todos)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    saveTodoList(todoList.id, { todos })
+    const listId = todoList.id
+    const data = { listId, todos }
+    saveTodoList(listId, { todos })
+
+    console.log('Submitting data to server:', data)
+
+    await fetch('http://localhost:3001/data', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
   }
 
   return (
