@@ -6,8 +6,7 @@ import AddIcon from '@mui/icons-material/Add'
 export const TodoListForm = ({ todoList, saveTodoList }) => {
   const [todos, setTodos] = useState(todoList.todos)
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
+  const handleSubmit = async () => {
     const listId = todoList.id
     const data = { listId, todos }
     saveTodoList(listId, { todos })
@@ -19,7 +18,7 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
-    alert('Your todo has been saved!')
+    // alert('Your todo has been saved!')
   }
 
   const handleDelete = async (index) => {
@@ -35,10 +34,7 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
     <Card sx={{ margin: '0 1rem' }}>
       <CardContent>
         <Typography component='h2'>{todoList.title}</Typography>
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}
-        >
+        <form style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
           {todos.map((name, index) => (
             <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
               <Typography sx={{ margin: '8px' }} variant='h6'>
@@ -55,6 +51,7 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                     event.target.value,
                     ...todos.slice(index + 1),
                   ])
+                  handleSubmit()
                 }}
               />
               <Button
@@ -72,13 +69,11 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
               type='button'
               color='primary'
               onClick={() => {
-                setTodos([...todos, ''])
+                const updatedTodos = [...todos, '']
+                setTodos(updatedTodos)
               }}
             >
               Add Todo <AddIcon />
-            </Button>
-            <Button type='submit' variant='contained' color='primary'>
-              Save
             </Button>
           </CardActions>
         </form>
