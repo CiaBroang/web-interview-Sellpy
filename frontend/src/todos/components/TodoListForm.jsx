@@ -14,10 +14,11 @@ import AddIcon from '@mui/icons-material/Add'
 export const TodoListForm = ({ todoList, saveTodoList }) => {
   const [todos, setTodos] = useState(todoList.todos)
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (todosToSubmit) => {
     const listId = todoList.id
-    const data = { listId, todos }
-    saveTodoList(listId, { todos })
+
+    const data = { listId, todos: todosToSubmit } // Sätter värdet av nyckeln 'todos' till todosToSubmit
+    saveTodoList(listId, { todos: todosToSubmit })
 
     console.log('Submitting data to server:', data)
 
@@ -26,6 +27,7 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
+    setTodos(todosToSubmit)
     // alert('Your todo has been saved!')
   }
 
@@ -50,19 +52,24 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                   <Typography sx={{ margin: '8px' }} variant='h6'>
                     {index + 1}
                   </Typography>
-                  <Checkbox />
+                  <Checkbox
+                    checked={todo.completed}
+                    onChange={(event) => {
+                      const updatedTodos = todos.map((todo, idx) =>
+                        idx === index ? { ...todo, completed: event.target.checked } : todo
+                      )
+                      handleSubmit(updatedTodos)
+                    }}
+                  />
                   <TextField
                     sx={{ flexGrow: 1, marginTop: '1rem' }}
                     label='What to do?'
                     value={todo.title}
                     onChange={(event) => {
-                      setTodos([
-                        // immutable update
-                        ...todos.slice(0, index),
-                        event.target.value,
-                        ...todos.slice(index + 1),
-                      ])
-                      handleSubmit() //Antagligen inte så bra med så många anrop
+                      const updatedTodos = todos.map((todo, idx) =>
+                        idx === index ? { ...todo, title: event.target.value } : todo
+                      )
+                      handleSubmit(updatedTodos) //Antagligen inte så bra med så många anrop
                     }}
                   />
                   <Button

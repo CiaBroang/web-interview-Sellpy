@@ -4,16 +4,12 @@
     "title": "First List",
     "todos": [
       {
-        "title": "dddddd",
-        "completed": false
+        "title": "A",
+        "completed": true
       },
       {
-        "title": "dsdsds",
-        "completed": false
-      },
-      {
-        "title": "dsdsd",
-        "completed": false
+        "title": "Bbcadsadssdadssds",
+        "completed": true
       }
     ]
   },
@@ -22,16 +18,16 @@
     "title": "Second List",
     "todos": [
       {
-        "title": "aaaaaaaaa",
+        "title": "a",
+        "completed": true
+      },
+      {
+        "title": "b",
         "completed": false
       },
       {
-        "title": "dsdsd",
-        "completed": false
-      },
-      {
-        "title": "dsdsd",
-        "completed": false
+        "title": "c",
+        "completed": true
       }
     ]
   }
