@@ -48,13 +48,16 @@ app.post('/data', (req, res) => {
   console.log('requestData', requestData)
 
   if (storedData[requestData.listId]) {
-    storedData[requestData.listId].todos = requestData.todos
-    storedData[requestData.listId].todos.splice(
-      //kolla om jag ska skita i splice och använda spread
-      0,
-      storedData[requestData.listId].todos.length,
-      ...requestData.todos
-    )
+    storedData[requestData.listId].todos = requestData.todos.map((todo) => ({
+      title: todo.title || todo,
+      completed: false,
+    }))
+    // storedData[requestData.listId].todos.splice(
+    //   //kolla om jag ska skita i splice och använda spread
+    //   0,
+    //   storedData[requestData.listId].todos.length,
+    //   ...requestData.todos
+    // )
     saveData(storedData)
     res.status(200).json({ message: 'Data updated successfully!' }) //Behövs verkligen .json här för bara en kort text?
   } else {
