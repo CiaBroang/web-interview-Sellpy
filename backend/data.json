@@ -4,12 +4,20 @@
     "title": "First List",
     "todos": [
       {
-        "title": "A",
-        "completed": true
+        "title": "a",
+        "completed": false
       },
       {
-        "title": "Bbcadsadssdadssds",
-        "completed": true
+        "title": "b",
+        "completed": false
+      },
+      {
+        "title": "c",
+        "completed": false
+      },
+      {
+        "title": "d",
+        "completed": false
       }
     ]
   },
@@ -27,7 +35,7 @@
       },
       {
         "title": "c",
-        "completed": true
+        "completed": false
       }
     ]
   }

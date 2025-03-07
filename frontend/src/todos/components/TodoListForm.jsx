@@ -37,7 +37,8 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
     })
 
     setTodos((todos) => [...todos.slice(0, index), ...todos.slice(index + 1)])
-    alert('Your todo has been deleted!')
+    console.log('New todos efter delete', todos)
+    // alert('Your todo has been deleted!')
   }
 
   return (
