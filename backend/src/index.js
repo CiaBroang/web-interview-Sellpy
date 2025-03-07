@@ -58,7 +58,7 @@ app.post('/data', (req, res) => {
   if (storedData[requestData.listId]) {
     storedData[requestData.listId].todos = filteredTodos.map((todo) => ({
       title: todo.title,
-      completed: todo.completed ? todo.completed : false,
+      completed: todo.completed,
     }))
 
     saveData(storedData)

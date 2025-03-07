@@ -90,7 +90,7 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
               color='primary'
               onClick={() => {
                 if (todos[todos.length - 1].title.trim().length > 0) {
-                  const updatedTodos = [...todos, { title: '' }]
+                  const updatedTodos = [...todos, { title: '', completed: false }]
                   setTodos(updatedTodos)
                   console.log('Sent to setTodos state:', updatedTodos)
                 } else {
