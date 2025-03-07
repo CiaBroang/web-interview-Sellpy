@@ -5,19 +5,15 @@
     "todos": [
       {
         "title": "a",
-        "completed": false
+        "completed": true
       },
       {
         "title": "b",
-        "completed": false
+        "completed": true
       },
       {
         "title": "c",
-        "completed": false
-      },
-      {
-        "title": "d",
-        "completed": false
+        "completed": true
       }
     ]
   },
@@ -35,6 +31,14 @@
       },
       {
         "title": "c",
+        "completed": true
+      },
+      {
+        "title": "d",
+        "completed": false
+      },
+      {
+        "title": "e",
         "completed": false
       }
     ]

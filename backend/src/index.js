@@ -47,8 +47,16 @@ app.post('/data', (req, res) => {
   const requestData = req.body
   console.log('requestData', requestData)
 
+  const filteredTodos = requestData.todos.filter(
+    (todo) => todo.title && todo.title.trim().length > 0
+  )
+
+  if (filteredTodos.length === 0) {
+    return res.status(400).json({ message: 'A todo must have a title' })
+  }
+
   if (storedData[requestData.listId]) {
-    storedData[requestData.listId].todos = requestData.todos.map((todo) => ({
+    storedData[requestData.listId].todos = filteredTodos.map((todo) => ({
       title: todo.title,
       completed: todo.completed ? todo.completed : false,
     }))

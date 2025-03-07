@@ -89,8 +89,13 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
               type='button'
               color='primary'
               onClick={() => {
-                const updatedTodos = [...todos, '']
-                setTodos(updatedTodos)
+                if (todos[todos.length - 1].title.trim().length > 0) {
+                  const updatedTodos = [...todos, { title: '' }]
+                  setTodos(updatedTodos)
+                  console.log('Sent to setTodos state:', updatedTodos)
+                } else {
+                  alert('Complete the current todo before adding a new one!')
+                }
               }}
             >
               Add Todo <AddIcon />
