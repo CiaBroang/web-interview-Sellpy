@@ -14,6 +14,14 @@
       {
         "title": "c",
         "completed": true
+      },
+      {
+        "title": "d",
+        "completed": true
+      },
+      {
+        "title": "e",
+        "completed": false
       }
     ]
   },
@@ -22,20 +30,16 @@
     "title": "Second List",
     "todos": [
       {
-        "title": "a",
+        "title": "A",
         "completed": true
       },
       {
-        "title": "b",
+        "title": "B",
         "completed": true
       },
       {
-        "title": "c",
+        "title": "C",
         "completed": true
-      },
-      {
-        "title": "d",
-        "completed": false
       }
     ]
   }

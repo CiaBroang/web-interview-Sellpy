@@ -2,18 +2,24 @@ import React, { Fragment, useState, useEffect } from 'react'
 import {
   Card,
   CardContent,
+  Checkbox,
   List,
+  ListItem,
   ListItemButton,
   ListItemText,
-  ListItemIcon,
   Typography,
 } from '@mui/material'
-import ReceiptIcon from '@mui/icons-material/Receipt'
 import { TodoListForm } from './TodoListForm'
 
 export const TodoLists = ({ style }) => {
   const [todoLists, setTodoLists] = useState({})
   const [activeList, setActiveList] = useState()
+
+  const completedLists = {}
+  Object.values(todoLists).forEach((todoList) => {
+    const isCompleted = todoList.todos.every((todo) => todo.completed)
+    completedLists[todoList.id] = isCompleted
+  })
 
   useEffect(() => {
     fetch('http://localhost:3001/data')
@@ -30,12 +36,12 @@ export const TodoLists = ({ style }) => {
           <Typography component='h2'>My Todo Lists</Typography>
           <List>
             {Object.keys(todoLists).map((key) => (
-              <ListItemButton key={key} onClick={() => setActiveList(key)}>
-                <ListItemIcon>
-                  <ReceiptIcon />
-                </ListItemIcon>
-                <ListItemText primary={todoLists[key].title} />
-              </ListItemButton>
+              <ListItem key={key} style={{ display: 'flex', alignItems: 'center' }}>
+                <Checkbox checked={todoLists[key]?.todos.every((todo) => todo.completed)} />
+                <ListItemButton onClick={() => setActiveList(key)}>
+                  <ListItemText primary={todoLists[key].title} />
+                </ListItemButton>
+              </ListItem>
             ))}
           </List>
         </CardContent>
@@ -52,6 +58,11 @@ export const TodoLists = ({ style }) => {
             })
           }}
         />
+      )}
+      {completedLists[activeList] && (
+        <Typography variant='h6' color='green'>
+          You completed this todo list!
+        </Typography>
       )}
     </Fragment>
   )
