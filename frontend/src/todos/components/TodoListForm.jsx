@@ -49,7 +49,7 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
     <Card sx={{ margin: '0 1rem' }}>
       <CardContent>
         <Typography component='h2'>{todoList.title}</Typography>
-        <form style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+        <form style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, gap: '1rem' }}>
           {todos.map(
             (todo, index) =>
               console.log('todo', todo) || (
@@ -63,11 +63,12 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                       const updatedTodos = todos.map((todo, idx) =>
                         idx === index ? { ...todo, completed: event.target.checked } : todo
                       )
+                      console.log('todo with date', todo)
                       handleSubmit(updatedTodos)
                     }}
                   />
                   <TextField
-                    sx={{ flexGrow: 1, marginTop: '1rem' }}
+                    sx={{ flexGrow: 1, marginTop: '1rem', marginRight: '1rem' }}
                     label='What to do?'
                     value={todo.title}
                     onChange={(event) => {
@@ -77,10 +78,26 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                       handleSubmit(updatedTodos) //Antagligen inte så bra med så många anrop
                     }}
                   />
+                  <TextField
+                    type='date'
+                    sx={{ flexGrow: 1, marginTop: '1rem' }}
+                    value={todo.dueDate}
+                    onChange={(event) => {
+                      const updatedTodos = todos.map((todo, idx) =>
+                        idx === index
+                          ? {
+                              ...todo,
+                              dueDate: new Date(event.target.value).toISOString().split('T')[0],
+                            }
+                          : todo
+                      )
+                      handleSubmit(updatedTodos)
+                    }}
+                  />
                   <Button
                     sx={{ margin: '8px' }}
                     size='small'
-                    color='secondary'
+                    color='primary'
                     onClick={() => handleDelete(todoList.id, todo.id)}
                   >
                     <DeleteIcon />
@@ -94,7 +111,7 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
               color='primary'
               onClick={() => {
                 if (todos[todos.length - 1].title.trim().length > 0) {
-                  const updatedTodos = [...todos, { title: '', completed: false }]
+                  const updatedTodos = [...todos, { title: '', completed: false, dueDate: '' }]
                   saveTodoList(todoList.id, { todos: updatedTodos })
                 } else {
                   alert('Complete the current todo before adding a new one!')

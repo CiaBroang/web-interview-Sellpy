@@ -65,7 +65,7 @@ export const TodoLists = ({ style }) => {
         />
       )}
       {completedLists[activeList] && (
-        <Typography variant='h6' color='green'>
+        <Typography variant='h6' color='green' sx={{ display: 'flex', pl: 5, pt: 5 }}>
           You completed this todo list!
         </Typography>
       )}

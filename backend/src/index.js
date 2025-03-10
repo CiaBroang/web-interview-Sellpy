@@ -61,6 +61,7 @@ app.post('/data', (req, res) => {
       title: todo.title,
       completed: todo.completed,
       id: todo.id || uuidv4(),
+      dueDate: todo.dueDate,
     }))
 
     saveData(storedData)
