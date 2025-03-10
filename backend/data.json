@@ -5,18 +5,13 @@
     "todos": [
       {
         "title": "a",
-        "completed": true,
+        "completed": false,
         "id": "d97e83d4-b5a8-4764-85f2-3ea3642165d8"
       },
       {
         "title": "b",
-        "completed": true,
+        "completed": false,
         "id": "da07e16f-379a-4434-a42f-e835a2db071a"
-      },
-      {
-        "title": "c",
-        "completed": true,
-        "id": "95979aff-ba6a-40e0-911e-c75d9af72a1a"
       }
     ]
   },
@@ -26,18 +21,13 @@
     "todos": [
       {
         "title": "A",
-        "completed": true,
-        "id": "c0fbeb8f-b133-4254-b3e9-801416146b51"
+        "completed": false,
+        "id": "5d316f8a-8a28-41a6-a677-85df7105a197"
       },
       {
         "title": "B",
         "completed": false,
-        "id": "5083c7f9-ff5d-4e57-a097-f90668bcc6f4"
-      },
-      {
-        "title": "C",
-        "completed": false,
-        "id": "b40600b0-5504-4b77-adce-9d34e2f856c0"
+        "id": "ad61f667-5990-457f-a1e8-fb178cdec7b3"
       }
     ]
   }

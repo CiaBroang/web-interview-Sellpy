@@ -72,16 +72,16 @@ app.post('/data', (req, res) => {
   }
 })
 
-app.delete('/data/:listId/:todoIndex', (req, res) => {
+app.delete('/data', (req, res) => {
   console.log('DELETE request received!')
   const storedData = readData()
   console.log('storedData', storedData)
-  const listId = req.params.listId
-  const todoIndex = parseInt(req.params.todoIndex)
-  console.log('Request Data - listId:', listId, 'todoIndex:', todoIndex)
+
+  const { listId, todoId } = req.body
+  console.log('Request Data - listId:', listId, 'todoId:', todoId)
 
   if (storedData[listId]) {
-    storedData[listId].todos = storedData[listId].todos.filter((todo, index) => index !== todoIndex)
+    storedData[listId].todos = storedData[listId].todos.filter((todo) => todo.id !== todoId)
     saveData(storedData)
     res.status(200).json({ message: 'Deleted todo successfully!' })
   } else {

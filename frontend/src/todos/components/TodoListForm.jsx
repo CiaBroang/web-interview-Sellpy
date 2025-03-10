@@ -31,14 +31,19 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
     saveTodoList(listId, { todos: updatedTodos })
   }
 
-  const handleDelete = async (index) => {
-    await fetch(`http://localhost:3001/data/${todoList.id}/${index}`, {
+  const handleDelete = async (listId, todoId) => {
+    const data = { listId, todoId }
+    await fetch(`http://localhost:3001/data`, {
       method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     })
 
-    const updatedTodos = [...todos.slice(0, index), ...todos.slice(index + 1)]
+    // const updatedTodos = [...todos.slice(0, index), ...todos.slice(index + 1)]
+    // const updatedTodos = storedData[listId].todos.filter((todo) => todo.id !== todoId)
+    const updatedTodos = todos.filter((todo) => todo.id !== todoId)
 
-    saveTodoList(todoList.id, { todos: updatedTodos })
+    saveTodoList(listId, { todos: updatedTodos })
     console.log('New todos efter delete', todos)
   }
 
@@ -78,7 +83,7 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                     sx={{ margin: '8px' }}
                     size='small'
                     color='secondary'
-                    onClick={() => handleDelete(index)}
+                    onClick={() => handleDelete(todoList.id, todo.id)}
                   >
                     <DeleteIcon />
                   </Button>
