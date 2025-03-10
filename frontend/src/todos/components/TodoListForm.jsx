@@ -39,8 +39,6 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
       body: JSON.stringify(data),
     })
 
-    // const updatedTodos = [...todos.slice(0, index), ...todos.slice(index + 1)]
-    // const updatedTodos = storedData[listId].todos.filter((todo) => todo.id !== todoId)
     const updatedTodos = todos.filter((todo) => todo.id !== todoId)
 
     saveTodoList(listId, { todos: updatedTodos })
