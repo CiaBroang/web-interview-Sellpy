@@ -5,19 +5,18 @@
     "todos": [
       {
         "title": "a",
-        "completed": true
+        "completed": true,
+        "id": "d97e83d4-b5a8-4764-85f2-3ea3642165d8"
       },
       {
         "title": "b",
-        "completed": true
+        "completed": true,
+        "id": "da07e16f-379a-4434-a42f-e835a2db071a"
       },
       {
         "title": "c",
-        "completed": true
-      },
-      {
-        "title": "d",
-        "completed": true
+        "completed": true,
+        "id": "95979aff-ba6a-40e0-911e-c75d9af72a1a"
       }
     ]
   },
@@ -27,19 +26,18 @@
     "todos": [
       {
         "title": "A",
-        "completed": true
+        "completed": true,
+        "id": "c0fbeb8f-b133-4254-b3e9-801416146b51"
       },
       {
         "title": "B",
-        "completed": true
+        "completed": false,
+        "id": "5083c7f9-ff5d-4e57-a097-f90668bcc6f4"
       },
       {
-        "title": "E",
-        "completed": true
-      },
-      {
-        "title": "F",
-        "completed": true
+        "title": "C",
+        "completed": false,
+        "id": "b40600b0-5504-4b77-adce-9d34e2f856c0"
       }
     ]
   }

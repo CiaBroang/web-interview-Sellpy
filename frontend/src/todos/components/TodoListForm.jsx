@@ -7,7 +7,6 @@ import {
   Typography,
   Checkbox,
 } from '@mui/material'
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
 
@@ -21,13 +20,15 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
 
     console.log('Submitting data to server:', data)
 
-    await fetch('http://localhost:3001/data', {
+    const response = await fetch('http://localhost:3001/data', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
+    const responseData = await response.json()
+    const updatedTodos = responseData.todos
 
-    saveTodoList(listId, { todos: todosToSubmit })
+    saveTodoList(listId, { todos: updatedTodos })
   }
 
   const handleDelete = async (index) => {
@@ -81,7 +82,6 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                   >
                     <DeleteIcon />
                   </Button>
-                  {/* <DatePicker label='Due date' /> */}
                 </div>
               )
           )}
@@ -93,7 +93,6 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                 if (todos[todos.length - 1].title.trim().length > 0) {
                   const updatedTodos = [...todos, { title: '', completed: false }]
                   saveTodoList(todoList.id, { todos: updatedTodos })
-                  console.log('Sent to setTodos state:', updatedTodos)
                 } else {
                   alert('Complete the current todo before adding a new one!')
                 }

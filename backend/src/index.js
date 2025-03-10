@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import fs from 'fs'
+import { v4 as uuidv4 } from 'uuid'
 
 const app = express()
 
@@ -59,10 +60,13 @@ app.post('/data', (req, res) => {
     storedData[requestData.listId].todos = filteredTodos.map((todo) => ({
       title: todo.title,
       completed: todo.completed,
+      id: todo.id || uuidv4(),
     }))
 
     saveData(storedData)
-    res.status(200).json({ message: 'Data updated successfully!' })
+    res
+      .status(200)
+      .json({ message: 'Data updated successfully!', todos: storedData[requestData.listId].todos })
   } else {
     res.status(404).json({ message: 'List not found!' })
   }
