@@ -18,10 +18,6 @@
       {
         "title": "d",
         "completed": true
-      },
-      {
-        "title": "e",
-        "completed": false
       }
     ]
   },
@@ -38,7 +34,11 @@
         "completed": true
       },
       {
-        "title": "C",
+        "title": "E",
+        "completed": true
+      },
+      {
+        "title": "F",
         "completed": true
       }
     ]

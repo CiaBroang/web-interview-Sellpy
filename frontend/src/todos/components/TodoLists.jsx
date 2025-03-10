@@ -2,13 +2,14 @@ import React, { Fragment, useState, useEffect } from 'react'
 import {
   Card,
   CardContent,
-  Checkbox,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
   Typography,
 } from '@mui/material'
+import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined'
 import { TodoListForm } from './TodoListForm'
 
 export const TodoLists = ({ style }) => {
@@ -37,7 +38,11 @@ export const TodoLists = ({ style }) => {
           <List>
             {Object.keys(todoLists).map((key) => (
               <ListItem key={key} style={{ display: 'flex', alignItems: 'center' }}>
-                <Checkbox checked={todoLists[key]?.todos.every((todo) => todo.completed)} />
+                {todoLists[key]?.todos.every((todo) => todo.completed) ? (
+                  <CheckCircleOutlinedIcon color='success' fontSize='large' />
+                ) : (
+                  <CircleOutlinedIcon fontSize='large' />
+                )}
                 <ListItemButton onClick={() => setActiveList(key)}>
                   <ListItemText primary={todoLists[key].title} />
                 </ListItemButton>
