@@ -18,6 +18,8 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
 
     const data = { listId, todos: todosToSubmit }
 
+    // Jag skulle vilja validera data innan det skickas till backend
+    // Kunna visa upp fel på specifika fält?
     console.log('Submitting data to server:', data)
 
     const response = await fetch('http://localhost:3001/data', {
@@ -26,9 +28,10 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
       body: JSON.stringify(data),
     })
     const responseData = await response.json()
-    const updatedTodos = responseData.todos
-
-    saveTodoList(listId, { todos: updatedTodos })
+    if (response.ok) {
+      const updatedTodos = responseData.todos
+      saveTodoList(listId, { todos: updatedTodos })
+    } else alert(responseData.message)
   }
 
   const handleDelete = async (listId, todoId) => {
@@ -75,19 +78,19 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                       const updatedTodos = todos.map((todo, idx) =>
                         idx === index ? { ...todo, title: event.target.value } : todo
                       )
-                      handleSubmit(updatedTodos) //Antagligen inte så bra med så många anrop
+                      handleSubmit(updatedTodos) //Antagligen inte så bra med så många anrop, kolla timer
                     }}
                   />
                   <TextField
                     type='date'
                     sx={{ flexGrow: 1, marginTop: '1rem' }}
-                    value={todo.dueDate}
+                    value={todo.dueDate ? todo.dueDate.split('T')[0] : ''}
                     onChange={(event) => {
                       const updatedTodos = todos.map((todo, idx) =>
-                        idx === index
+                        idx === index //lite osäkert med index här kanske, borde nog använda ID och isf byta namn på todo inre/yttre scope
                           ? {
                               ...todo,
-                              dueDate: new Date(event.target.value).toISOString().split('T')[0],
+                              dueDate: new Date(event.target.value).toISOString(),
                             }
                           : todo
                       )
@@ -105,17 +108,14 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                 </div>
               )
           )}
+          ;
           <CardActions>
             <Button
               type='button'
               color='primary'
               onClick={() => {
-                if (todos[todos.length - 1].title.trim().length > 0) {
-                  const updatedTodos = [...todos, { title: '', completed: false, dueDate: '' }]
-                  saveTodoList(todoList.id, { todos: updatedTodos })
-                } else {
-                  alert('Complete the current todo before adding a new one!')
-                }
+                const updatedTodos = [...todos, { title: '', completed: false, dueDate: '' }]
+                saveTodoList(todoList.id, { todos: updatedTodos })
               }}
             >
               Add Todo <AddIcon />

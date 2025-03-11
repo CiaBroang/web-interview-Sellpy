@@ -8,7 +8,7 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material'
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
+import ListAltIcon from '@mui/icons-material/ListAlt'
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined'
 import { TodoListForm } from './TodoListForm'
 
@@ -38,14 +38,13 @@ export const TodoLists = ({ style }) => {
           <List>
             {Object.keys(todoLists).map((key) => (
               <ListItem key={key} style={{ display: 'flex', alignItems: 'center' }}>
-                {todoLists[key]?.todos.every((todo) => todo.completed) ? (
-                  <CheckCircleOutlinedIcon color='success' fontSize='large' />
-                ) : (
-                  <CircleOutlinedIcon fontSize='large' />
-                )}
+                <ListAltIcon fontSize='medium' />
                 <ListItemButton onClick={() => setActiveList(key)}>
                   <ListItemText primary={todoLists[key].title} />
                 </ListItemButton>
+                {todoLists[key]?.todos.every((todo) => todo.completed) && (
+                  <CheckCircleOutlinedIcon color='success' fontSize='large' />
+                )}
               </ListItem>
             ))}
           </List>
