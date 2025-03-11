@@ -27,8 +27,13 @@ const readData = () => {
 }
 
 app.get('/data', (req, res) => {
-  const storedData = readData()
-  res.json(storedData)
+  try {
+    const storedData = readData()
+    res.json(storedData)
+  } catch (error) {
+    console.error('Error encountered reading data', error)
+    res.sendStatus(500)
+  }
 })
 
 const saveData = (data) => {
@@ -39,50 +44,60 @@ const saveData = (data) => {
     console.error('Error saving data to data.json:', error)
   }
 }
-saveData()
 
 app.post('/data', (req, res) => {
-  console.log('POST request received!')
-  const requestData = req.body
-  console.log('requestData', requestData)
+  try {
+    console.log('POST request received!')
+    const requestData = req.body
+    console.log('requestData', requestData)
 
-  if (!requestData || !requestData.listId || !requestData.todos) {
-    return res.status(400).json({ message: 'Invalid request data' })
-  }
+    if (!requestData || !requestData.listId || !requestData.todos) {
+      return res.status(400).json({ message: 'Invalid request data' })
+    }
 
-  const storedData = readData()
-  console.log('storedData', storedData)
+    const storedData = readData()
+    console.log('storedData', storedData)
 
-  if (storedData[requestData.listId]) {
-    storedData[requestData.listId].todos = requestData.todos.map((todo) => ({
-      title: todo.title,
-      completed: todo.completed,
-      id: todo.id || uuidv4(),
-      dueDate: todo.dueDate,
-    }))
+    if (storedData[requestData.listId]) {
+      storedData[requestData.listId].todos = requestData.todos.map((todo) => ({
+        title: todo.title,
+        completed: todo.completed,
+        id: todo.id || uuidv4(),
+        dueDate: todo.dueDate,
+      }))
 
-    saveData(storedData)
-    res
-      .status(200)
-      .json({ message: 'Data updated successfully!', todos: storedData[requestData.listId].todos })
-  } else {
-    res.status(404).json({ message: 'List not found!' })
+      saveData(storedData)
+      res.status(200).json({
+        message: 'Data updated successfully!',
+        todos: storedData[requestData.listId].todos,
+      })
+    } else {
+      res.status(404).json({ message: 'List not found!' })
+    }
+  } catch (error) {
+    console.error('Error encountered posting data', error)
+    res.sendStatus(500)
   }
 })
 
 app.delete('/data', (req, res) => {
-  console.log('DELETE request received!')
-  const storedData = readData()
-  console.log('storedData', storedData)
+  try {
+    console.log('DELETE request received!')
+    const storedData = readData()
+    console.log('storedData', storedData)
 
-  const { listId, todoId } = req.body
-  console.log('Request Data - listId:', listId, 'todoId:', todoId)
+    const { listId, todoId } = req.body
+    console.log('Request Data - listId:', listId, 'todoId:', todoId)
 
-  if (storedData[listId]) {
-    storedData[listId].todos = storedData[listId].todos.filter((todo) => todo.id !== todoId)
-    saveData(storedData)
-    res.status(200).json({ message: 'Deleted todo successfully!' })
-  } else {
-    res.status(404).json({ message: 'List not found!' })
+    if (storedData[listId]) {
+      storedData[listId].todos = storedData[listId].todos.filter((todo) => todo.id !== todoId)
+      saveData(storedData)
+      res.status(200).json({ message: 'Deleted todo successfully!' })
+    } else {
+      res.status(404).json({ message: 'List not found!' })
+    }
+  } catch (error) {
+    console.error('Error encountered deleting data', error)
+    res.sendStatus(500)
   }
 })

@@ -54,29 +54,31 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
         <Typography component='h2'>{todoList.title}</Typography>
         <form style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, gap: '1rem' }}>
           {todos.map(
-            (todo, index) =>
-              console.log('todo', todo) || (
+            (todoToRender, index) =>
+              console.log('todo', todoToRender) || (
                 <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
                   <Typography sx={{ margin: '8px' }} variant='h6'>
                     {index + 1}
                   </Typography>
                   <Checkbox
-                    checked={todo.completed}
+                    checked={todoToRender.completed}
                     onChange={(event) => {
-                      const updatedTodos = todos.map((todo, idx) =>
-                        idx === index ? { ...todo, completed: event.target.checked } : todo
+                      const updatedTodos = todos.map((todo) =>
+                        todoToRender.id === todo.id
+                          ? { ...todo, completed: event.target.checked }
+                          : todo
                       )
-                      console.log('todo with date', todo)
+                      console.log('todo with date', todoToRender)
                       handleSubmit(updatedTodos)
                     }}
                   />
                   <TextField
                     sx={{ flexGrow: 1, marginTop: '1rem', marginRight: '1rem' }}
                     label='What to do?'
-                    value={todo.title}
+                    value={todoToRender.title}
                     onChange={(event) => {
-                      const updatedTodos = todos.map((todo, idx) =>
-                        idx === index ? { ...todo, title: event.target.value } : todo
+                      const updatedTodos = todos.map((todo) =>
+                        todoToRender.id === todo.id ? { ...todo, title: event.target.value } : todo
                       )
                       handleSubmit(updatedTodos) //Antagligen inte så bra med så många anrop, kolla timer
                     }}
@@ -84,10 +86,10 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                   <TextField
                     type='date'
                     sx={{ flexGrow: 1, marginTop: '1rem' }}
-                    value={todo.dueDate ? todo.dueDate.split('T')[0] : ''}
+                    value={todoToRender.dueDate ? todoToRender.dueDate.split('T')[0] : ''}
                     onChange={(event) => {
-                      const updatedTodos = todos.map((todo, idx) =>
-                        idx === index //lite osäkert med index här kanske, borde nog använda ID och isf byta namn på todo inre/yttre scope
+                      const updatedTodos = todos.map((todo) =>
+                        todoToRender.id === todo.id //lite osäkert med index här kanske, borde nog använda ID och isf byta namn på todo inre/yttre scope
                           ? {
                               ...todo,
                               dueDate: new Date(event.target.value).toISOString(),
@@ -101,14 +103,13 @@ export const TodoListForm = ({ todoList, saveTodoList }) => {
                     sx={{ margin: '8px' }}
                     size='small'
                     color='primary'
-                    onClick={() => handleDelete(todoList.id, todo.id)}
+                    onClick={() => handleDelete(todoList.id, todoToRender.id)}
                   >
                     <DeleteIcon />
                   </Button>
                 </div>
               )
           )}
-          ;
           <CardActions>
             <Button
               type='button'
